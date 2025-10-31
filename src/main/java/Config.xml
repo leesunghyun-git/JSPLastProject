@@ -24,8 +24,6 @@
     </environment>
   </environments>
   <mappers>
-   <mapper resource="com/sist/mapper/music-mapper.xml"></mapper>
    <mapper resource="com/sist/mapper/food-mapper.xml"></mapper>
-   <mapper resource="com/sist/mapper/replyboard-mapper.xml"></mapper>
   </mappers>
 </configuration>
