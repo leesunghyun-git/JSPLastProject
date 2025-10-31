@@ -58,7 +58,7 @@
                 <!-- Logo Area Start -->
                 <div class="col-12">
                     <div class="logo_area text-center">
-                        <a href="index.html" class="yummy-logo">Yummy Blog</a>
+                        <a href="../main/main.do" class="yummy-logo">Food & Recipe & Goods</a>
                     </div>
                 </div>
             </div>
@@ -71,32 +71,74 @@
                         <div class="collapse navbar-collapse justify-content-center" id="yummyfood-nav">
                             <ul class="navbar-nav" id="yummy-nav">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                    <a class="nav-link" href="../main/main.do">Home <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">회원</a>
                                     <div class="dropdown-menu" aria-labelledby="yummyDropdown">
-                                        <a class="dropdown-item" href="index.html">Home</a>
-                                        <a class="dropdown-item" href="archive.html">Archive</a>
-                                        <a class="dropdown-item" href="single.html">Single Blog</a>
-                                        <a class="dropdown-item" href="static.html">Static Page</a>
-                                        <a class="dropdown-item" href="contact.html">Contact</a>
+                                    	<%-- 아이디 찾기 : RPAD --%>
+                                        <a class="dropdown-item" href="index.html">회원가입</a>
+                                        <a class="dropdown-item" href="archive.html">아이디찾기</a>
+                                        <%-- JavaMail 라이브러리 --%>
+                                        <a class="dropdown-item" href="single.html">비밀번호 찾기</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">맛집</a>
+                                    <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                                        <a class="dropdown-item" href="index.html">맛집 검색</a>
+                                        <%-- 지도 이용 --%>
+                                        <a class="dropdown-item" href="archive.html">맛집 찾기</a>
+                                        
+                                        <a class="dropdown-item" href="single.html">맛집 예약</a>
+                                        <%-- 네이버 카페 / 블로그 : 형태소 분석 --%>
+                                        <a class="dropdown-item" href="single.html">맛집 추천</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">레시피</a>
+                                    <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                                        <a class="dropdown-item" href="index.html">레시피 목록</a>
+                                        <%-- 지도 이용 --%>
+                                        <a class="dropdown-item" href="archive.html">쉐프</a>
+                                        
+                                        <a class="dropdown-item" href="single.html">레시피 등록</a>
+                                        <%-- 네이버 카페 / 블로그 : 형태소 분석 --%>
+                                        <a class="dropdown-item" href="single.html">레시피 검색</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">스토어</a>
+                                    <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                                        <a class="dropdown-item" href="index.html">전체 목록</a>
+                                        <%-- 지도 이용 --%>
+                                        <a class="dropdown-item" href="archive.html">신상품</a>
+                                        
+                                        <a class="dropdown-item" href="single.html">베스트 상품</a>
+                                        <%-- 네이버 카페 / 블로그 : 형태소 분석 --%>
+                                        <a class="dropdown-item" href="single.html">특가 상품</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="yummyDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
+                                    <div class="dropdown-menu" aria-labelledby="yummyDropdown">
+                                        <a class="dropdown-item" href="index.html">공지사항</a>
+                                        <%-- 지도 이용 --%>
+                                        <a class="dropdown-item" href="archive.html">자유게시판</a>
+                                        
+                                        <a class="dropdown-item" href="single.html">묻고답하기</a>
+                                        <%-- 네이버 카페 / 블로그 : 형태소 분석 --%>
+                                        <a class="dropdown-item" href="single.html">후기게시판</a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Features</a>
+                                    <a class="nav-link" href="contact.html">빠른 예약</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Categories</a>
+                                    <a class="nav-link" href="contact.html">실시간 채팅</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="archive.html">Archive</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
+                                    <a class="nav-link" href="contact.html">마이 페이지</a>
                                 </li>
                             </ul>
                         </div>
