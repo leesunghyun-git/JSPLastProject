@@ -554,7 +554,7 @@ li {
     height: 100%;
     top: 0;
     left: 0;
-    cursor: url(/JSPLastProject/img/core-img/back.png), auto !important;
+    cursor: url("/JSPLastProject/img/core-img/back.png"), auto !important;
     z-index: 9;
 }
 
@@ -565,7 +565,7 @@ li {
     height: 100%;
     top: 0;
     right: 0;
-    cursor: url(/JSPLastProject/img/core-img/next.png), auto !important;
+    cursor: url("/JSPLastProject/img/core-img/next.png"), auto !important;
 }
 
 /* --------------------
