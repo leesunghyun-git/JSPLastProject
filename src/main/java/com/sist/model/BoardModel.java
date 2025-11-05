@@ -127,6 +127,9 @@ public class BoardModel {
 	@RequestMapping("board/update.do")
 	public String board_update(HttpServletRequest request,HttpServletResponse response)
 	{
+		String no=request.getParameter("no");
+		BoardVO vo=BoardDAO.boardUpdateData(Integer.parseInt(no));
+		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp", "../board/update.jsp");
 		return "../main/main.jsp";
 	}

@@ -61,4 +61,9 @@
 			DELETE FROM mvcBoard
 			WHERE no=#{no}
 		</delete>
+		<select id="boardUpdateData" resultType="BoardVO" parameterType="int">
+			SELECT no,name,subject,content
+			FROM mvcBoard
+			WHERE no = #{no}
+		</select>
 </mapper>

@@ -143,7 +143,7 @@ $(function(){
             	</tr>
             	<tr>
             		<td colspan ="4" class="text-right">
-            		<a href="#" class="btn btn-mint btn-sm">수정</a>
+            		<a href="../board/update.do?no=${vo.no }" class="btn btn-mint btn-sm">수정</a>
             		<span class="btn btn-pink btn-sm" id="delSpan">삭제</span>
             		<a href="../board/list.do?page=${page }" class="btn btn-mint btn-sm">목록</a>
             		</td>

@@ -13,12 +13,7 @@
 	margin:0px auto;
 	width:900px;
 }
-.temp
-{
-	border:2px solid #7CFC00;
-	border-radius:10px;
 
-}
 
 </style>
 </head>
@@ -61,7 +56,7 @@
             			이름
             			</th>
             			<td>
-            			<input type="text" name="name" class="form-control input-sm" style="width:150px" required="required">
+            			<input type="text" name="name" class="form-control input-sm" style="width:150px" value="${vo.name }"required="required">
             			</td>
             		</tr>
             		<tr>
@@ -69,7 +64,7 @@
             			제목
             			</th>
             			<td>
-            			<input type="text" name="subject" class="form-control input-sm" required>
+            			<input type="text" name="subject" class="form-control input-sm" value="${vo.subject }"required>
             			</td>
             		</tr>
             		<tr>
@@ -77,7 +72,7 @@
             			내용
             			</th>
             			<td>
-            			<textarea rows="10" cols="50" class="form-control" name="content" required></textarea>
+            			<textarea rows="10" cols="50" class="form-control" name="content" required>${vo.content }</textarea>
             			</td>
             		</tr>
             		<tr>
