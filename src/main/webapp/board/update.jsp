@@ -90,8 +90,13 @@
             		</tr>
             		<tr>
             			<td colspan="2" class="text-center">
-            				<input type="submit" class="btn btn-sm btn-mint" value="수정">
+            				<input type="submit" class="btn btn-sm btn-mint" value="수정" id="updateBtn" style="display:none">
             				<input type="button" class="btn btn-sm btn-pink" value="취소" onclick="javascript:history.back()	">
+            			</td>
+            		</tr>
+            		<tr style="display:none">
+            			<td colspan="2" class="text-center">
+            				<span style="color:red" id="print"></span>
             			</td>
             		</tr>
             	</table>
