@@ -47,7 +47,9 @@
                     <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                         <!-- Post Thumb -->
                         <div class="post-thumb">
+                        	<a href="../food/detail_before.do?fno=${vo.fno }&page=${curPage}">
                             <img src="${vo.poster }" alt="">
+                            </a>
                         </div>
                         <!-- Post Content -->
                         <div class="post-content">
@@ -55,18 +57,18 @@
                                 <div class="post-author-date-area d-flex">
                                     <!-- Post Author -->
                                     <div class="post-author">
-                                        <a href="#" style="cursor:default">${vo.type }</a>
+                                        <a href="../food/detail_before.do?fno=${vo.fno }&page=${curPage}">${vo.type }</a>
                                     </div>
                                     <!-- Post Date -->
                                     <div class="post-date">
-                                        <a href="#" style="cursor:default">${vo.address }</a>
+                                        <a href="../food/detail_before.do?fno=${vo.fno }&page=${curPage}">${vo.address }</a>
                                     </div>
                                 </div>
                                 <!-- Post Comment & Share Area -->
                                 <div class="post-comment-share-area d-flex">
                                     <!-- Post Favourite -->
                                     <div class="post-favourite">
-                                        <a href="../food/detail.do?fno=${vo.fno }"><i class="fa fa-heart-o" aria-hidden="true"></i> ${vo.likecount }</a>
+                                        <a href="../food/detail_before.do?fno=${vo.fno }&page=${curPage}"><i class="fa fa-heart-o" aria-hidden="true"></i> ${vo.likecount }</a>
                                     </div>
                                     <!-- Post Comments -->
                                     <div class="post-comments">
@@ -78,7 +80,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="../food/detail.do?fno=${vo.fno }&page=${curPage}">
                                 <h4 class="post-headline">${vo.name }</h4>
                             </a>
                         </div>

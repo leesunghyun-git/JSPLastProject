@@ -58,4 +58,23 @@ public class FoodDAO {
 		
 		return totalPage;
 	}
+	public static FoodVO foodDetailData(int fno)
+	{
+		FoodVO vo=null;
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();
+			session.update("foodHitIncrement", fno);
+			session.commit();
+			vo=session.selectOne("foodDetailData",fno);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+			session.close();
+		}
+		
+		return vo;
+	}
 }

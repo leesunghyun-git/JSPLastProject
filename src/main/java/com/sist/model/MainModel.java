@@ -1,7 +1,14 @@
 package com.sist.model;
 
+import java.util.List;
+import java.util.StringTokenizer;
+
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
+import com.sist.dao.MainDAO;
+import com.sist.vo.ChefVO;
+import com.sist.vo.FoodVO;
+import com.sist.vo.RecipeVO;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -213,13 +220,56 @@ import jakarta.servlet.http.HttpServletResponse;
  * 			| Controller가 보내준 request를 이용해 화면 ㅊ루력
  * 
  * 		** Controller 제어 => .xml
+ * 
  * 			=> DI / AOP
+ * 			
+ * 		화면
+ * 		  => 데이터 확인
+ * 		-------------------------
+ * 		  => mapper 작업
+ * 		  => DAO
+ * 		----------------------- 오라클에서 데이터 출력
+ *		   
  */
 @Controller
 public class MainModel {
 	@RequestMapping("main/main.do")
 	public String main_main(HttpServletRequest request,HttpServletResponse response)
 	{
+		//1. 메인 맛집
+		FoodVO vo=MainDAO.mainTopData();
+		request.setAttribute("mainVO", vo);
+		List<FoodVO> hitlist=MainDAO.mainHitTop4();
+		for(FoodVO hvo:hitlist)
+		{
+			String address=hvo.getAddress().substring(0,hvo.getAddress().indexOf(" "));
+			hvo.setAddress(address);	
+		}
+		List<FoodVO> likelist=MainDAO.mainLikeTop4();
+		for(FoodVO lvo:likelist)
+		{
+			String address=lvo.getAddress().substring(0,lvo.getAddress().indexOf(" "));
+			lvo.setAddress(address);	
+		}
+		
+		ChefVO cvo=MainDAO.mainChefTopData();
+		List<RecipeVO> rList=MainDAO.mainRecipeTop5();
+		for(RecipeVO rvo:rList)
+		{
+			String data=rvo.getPoster();
+			//https://recipe1.ezmember.co.kr/cache/recipe/2025/08/28/81c0f1f4949b15c82eaff9f075dd5b301_m.jpg
+			data=data.substring(data.lastIndexOf("/recipe/")+8,data.lastIndexOf("/recipe/")+18);
+//			System.out.println("data:"+data);
+			StringTokenizer st=new StringTokenizer(data,"/");
+			rvo.setYear(st.nextToken());
+			rvo.setMonth(st.nextToken());
+			rvo.setDay(st.nextToken());
+		}
+		request.setAttribute("cvo", cvo);
+		request.setAttribute("rList", rList);
+		request.setAttribute("hitList", hitlist);
+		request.setAttribute("likeList", likelist);
+		// main_jsp => 화면
 		request.setAttribute("main_jsp", "../main/home.jsp");
 		return "../main/main.jsp";
 	}

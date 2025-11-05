@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.recipe-mapper">
+	<!-- 쉐프 목록 출력 -->
+	<select id="chefListData" resultType="ChefVO" parameterType="hashmap">
+		SELECT no,chef,poster,mem_cont1,mem_cont2,mem_cont7,mem_cont3,num
+		FROM (SELECT no,chef,poster,mem_cont1,mem_cont2,mem_cont7,mem_cont3,ROWNUM as num
+		FROM (SELECT no,chef,poster,mem_cont1,mem_cont2,mem_cont7,mem_cont3
+		FROM chef
+		ORDER BY no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="chefTotalPage" resultType="int">
+		SELECT CEIL(COUNT(*)/12.0) FROM chef
+	</select>
+	<select id="mainChefTopData" resultType="ChefVO">
+		SELECT *
+		FROM (SELECT * FROM chef
+		ORDER BY DBMS_RANDOM.VALUE)
+		WHERE ROWNUM=1
+	</select>
+	<select id="mainRecipeTop5" resultType="RecipeVO">
+		SELECT no,poster,title,ROWNUM
+		FROM (SELECT no,poster,title
+		FROM recipe
+		ORDER BY no DESC)
+		WHERE ROWNUM &lt;=5
+	</select>
+	<!-- 
+		private int no,hit;
+	private String title,poster,chef,link,year,month,day;
+	 -->
+	<select id="recipeListData" resultType="RecipeVO" parameterType="hashmap">
+		SELECT no,hit,title,poster,chef,link,likecount,replycount,num
+		FROM (SELECT no,hit,title,poster,chef,link,likecount,replycount,ROWNUM as num
+		FROM (SELECT no,hit,title,poster,chef,link,likecount,replycount
+		FROM recipe
+		ORDER BY no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="recipeTotalPage" resultType="int">
+		SELECT CEIL(COUNT(*)/12.0) FROM recipe
+	</select>
+	<select id="recipeCount" resultType="int">
+		SELECT COUNT(*) FROM recipe
+	</select>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.manager.main-mapper">
+	<select id="mainTopData" resultType="FoodVO">
+		SELECT *
+		FROM (SELECT * FROM menupan_food
+		ORDER BY DBMS_RANDOM.VALUE)
+		WHERE ROWNUM=1
+	</select>
+	<select id="mainHitTop4" resultType="FoodVO">
+		SELECT fno,name,poster,address,type,likecount,replycount,hit,content,ROWNUM
+		FROM (SELECT fno,name,poster,address,type,theme,likecount,replycount,hit,content
+		FROM menupan_food
+		ORDER BY hit DESC)
+		WHERE ROWNUM &lt;=4
+	</select>
+	<select id="mainLikeTop4" resultType="FoodVO">
+		SELECT fno,name,poster,address,type,likecount,replycount,hit,content,ROWNUM
+		FROM (SELECT fno,name,poster,address,type,theme,likecount,replycount,hit,content
+		FROM menupan_food
+		ORDER BY likecount DESC)
+		WHERE ROWNUM &lt;=4
+	</select>
+</mapper>
