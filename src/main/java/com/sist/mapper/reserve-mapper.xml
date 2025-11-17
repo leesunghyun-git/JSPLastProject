@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.reserve-mapper">
+	<select id="reserveFoodListData" resultType="foodVO" parameterType="string">
+		SELECT fno,name,poster,type,rownum
+		FROM (SELECT fno,name,poster,type
+		FROM menupan_food ORDER BY fno)
+		WHERE rownum&lt;=100
+		AND type LIKE '%'||#{fd}||'%' 
+	</select>
+	<select id="reserveDateTimes" resultType="string" parameterType="int">
+		SELECT times FROM reserve_date
+		WHERE dno=#{dno}
+	</select> 
+	<select id="reserveTime" resultType="string" parameterType="int">
+		SELECT time FROM reserve_time
+		WHERE tno=#{tno}
+	</select>
+	<!-- 
+		NO      NOT NULL NUMBER       
+ID               VARCHAR2(20) 
+FNO              NUMBER       
+RDAY    NOT NULL VARCHAR2(20) 
+TIME    NOT NULL VARCHAR2(30) 
+INWON   NOT NULL VARCHAR2(20) 
+OK               NUMBER       
+REGDATE          DATE        
+	
+	 -->
+	<insert id="reserveInsert" parameterType="ReserveVO">
+		INSERT INTO reserve
+		VALUES(ri_no_seq.nextval,#{id},#{fno},#{rday},#{time},#{inwon},#{ok},SYSDATE)
+	</insert>
+</mapper>

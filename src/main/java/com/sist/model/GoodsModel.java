@@ -1,16 +1,20 @@
 package com.sist.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
 import com.sist.dao.*;
 import com.sist.vo.*;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class GoodsModel {
@@ -70,6 +74,32 @@ public class GoodsModel {
 		request.setAttribute("totalPage", totalPage);
 		request.setAttribute("cno", cno);
 		request.setAttribute("tag", tag);
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		List<GoodsVO> cList=new ArrayList<GoodsVO>();
+		if(id!=null)
+		{
+			Cookie[] cookies=request.getCookies();
+			if(cookies!=null)
+			{
+				for(int i=cookies.length-1;i>=0;i--)
+				{
+					if(cookies[i].getName().startsWith("goods_"+id))
+					{
+						String etc=cookies[i].getValue();
+						StringTokenizer st=new StringTokenizer(etc,"_");
+						String cookieno=st.nextToken();
+						String cookiecno=st.nextToken();
+						Map cmap=new HashMap<>();
+						cmap.put("goods",cnomap.get(cookiecno));
+						cmap.put("no",cookieno);
+						GoodsVO cvo=GoodsDAO.goodsCookieData(cmap);
+						cList.add(cvo);
+					}
+				}
+			}
+			request.setAttribute("cList", cList);
+		}
 		request.setAttribute("main_jsp", "../goods/list.jsp");
 		return "../main/main.jsp";
 	}
@@ -84,9 +114,12 @@ public class GoodsModel {
 		map.put("goods", goods);
 		map.put("no", Integer.parseInt(no));
 		GoodsVO vo=GoodsDAO.goodsDetailData(map);
+		String price=vo.getGoods_price();
+		price=price.replaceAll("[^0-9]", "");
+		vo.setPrice(Integer.parseInt(price));
 		request.setAttribute("page", page);
 		request.setAttribute("cno", cno);
-		request.setAttribute("vo", vo);
+		request.setAttribute("vo", vo);		
 		request.setAttribute("main_jsp", "../goods/detail.jsp");
 		return "../main/main.jsp";
 	}
@@ -96,7 +129,19 @@ public class GoodsModel {
 		String page=request.getParameter("page");
 		String cno=request.getParameter("cno");
 		String no=request.getParameter("no");
-
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		Cookie[] cookies=request.getCookies();
+		for(int i=cookies.length-1;i>=0;i--)
+		{
+			if(cookies[i].getName().equals("goods_"+id+"_"+no))
+			{
+				cookies[i].setMaxAge(0);
+				response.addCookie(cookies[i]);
+				break;
+			}
+		}
+		Cookie cookie=new Cookie("goods_"+id+"_"+no+"_"+cno, no+"_"+cno);
 		return "redirect:../goods/detail.do?no="+no+"&page="+page+"&cno="+cno;
 	}
 }

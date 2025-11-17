@@ -90,9 +90,67 @@ public class RecipeModel {
 	@RequestMapping("recipe/detail.do")
 	public String recipe_detail(HttpServletRequest request,HttpServletResponse response)
 	{
-		
-		
+		String no=request.getParameter("no");
+		RecipeDetailVO vo=RecipeDAO.recipeDetailData(Integer.parseInt(no));
+		List<String> mList=new ArrayList<String>();
+		List<String> iList=new ArrayList<String>();
+		String[] datas=vo.getFoodmake().split("\n");
+		for(String s:datas)
+		{
+			StringTokenizer st=new StringTokenizer(s,"^");
+			mList.add(st.nextToken());
+			iList.add(st.nextToken());
+		}
+		request.setAttribute("mList", mList);
+		request.setAttribute("iList", iList);		
+		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp", "../recipe/detail.jsp");
 		return "../main/main.jsp";
 	}
-}
+	@RequestMapping("recipe/find.do")
+	public String recipe_find(HttpServletRequest request,HttpServletResponse response)
+	{
+		request.setAttribute("main_jsp", "../recipe/find.jsp");
+		return "../main/main.jsp";
+	}
+	@RequestMapping("recipe/recipe_result.do")
+	public String recipe_find_result(HttpServletRequest request,HttpServletResponse response)
+	{
+		String page=request.getParameter("page");
+		String fd=request.getParameter("fd");
+		String column=request.getParameter("column");
+		if (page==null)
+		{
+			page="1";
+		}
+		Map<String,Object> map=new HashMap<>();
+		int rowSize=12;
+		int curPage=Integer.parseInt(page);
+		int start=(rowSize*curPage)-(rowSize-1);
+		int end=(rowSize*curPage);
+		map.put("column",column);
+		map.put("fd", fd);
+		int totalPage=RecipeDAO.recipeFindTotalPage(map);
+		map.put("start", start);
+		map.put("end", end);
+		List<RecipeVO> list=RecipeDAO.recipeListData(map);
+		int count=RecipeDAO.recipeCount();
+		String strcount=new DecimalFormat("#,###").format(count);
+		final int BLOCK = 10;
+		
+		int startPage=((curPage-1)/BLOCK*BLOCK)+1;
+		int endPage=((curPage-1)/BLOCK*BLOCK)+BLOCK;
+		if(totalPage<endPage)
+		{
+			endPage=totalPage;
+		}
+		
+		request.setAttribute("list", list);
+		request.setAttribute("curPage", curPage);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("count", strcount);
+		return "../recipe/recipe_result.jsp";
+	}
+} 

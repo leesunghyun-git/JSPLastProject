@@ -34,14 +34,52 @@
 		SELECT no,hit,title,poster,chef,link,likecount,replycount,num
 		FROM (SELECT no,hit,title,poster,chef,link,likecount,replycount,ROWNUM as num
 		FROM (SELECT no,hit,title,poster,chef,link,likecount,replycount
-		FROM recipe
+		FROM recipe WHERE no IN (
+		SELECT no FROM recipe
+		INTERSECT
+		SELECT no FROM recipeDetail
+		)
 		ORDER BY no ASC))
 		WHERE num BETWEEN #{start} AND #{end}
 	</select>
 	<select id="recipeTotalPage" resultType="int">
-		SELECT CEIL(COUNT(*)/12.0) FROM recipe
+		SELECT CEIL(COUNT(*)/12.0) FROM recipe WHERE no IN (
+		SELECT no FROM recipe
+		INTERSECT
+		SELECT no FROM recipeDetail)
 	</select>
 	<select id="recipeCount" resultType="int">
-		SELECT COUNT(*) FROM recipe
+		SELECT COUNT(*) FROM recipe WHERE no IN (
+		SELECT no FROM recipe
+		INTERSECT
+		SELECT no FROM recipeDetail)
+	</select>
+	<update id="recipeHitIncrement" parameterType="int">
+		UPDATE recipe SET
+		hit=hit+1
+		WHERE no=#{no}
+	</update>
+	<select id="recipeDetailData" resultType="RecipeDetailVO" parameterType="int">
+		SELECT * FROM recipeDetail WHERE no = #{no}
+	</select>
+	<select id="recipeFindListData" resultType="RecipeVO" parameterType="hashmap">
+		SELECT no,hit,title,poster,chef,link,likecount,replycount,num
+		FROM (SELECT no,hit,title,poster,chef,link,likecount,replycount,ROWNUM as num
+		FROM (SELECT no,hit,title,poster,chef,link,likecount,replycount
+		FROM recipe WHERE no IN (
+		SELECT no FROM recipe
+		INTERSECT
+		SELECT no FROM recipeDetail
+		)
+		AND ${column} LIKE '%'||#{fd}||'%'
+		ORDER BY no ASC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<select id="recipeFindTotalPage" resultType="int" parameterType="hashmap">
+		SELECT CEIL(COUNT(*)/12.0) FROM recipe WHERE no IN (
+		SELECT no FROM recipe
+		INTERSECT
+		SELECT no FROM recipeDetail)
+		AND ${column} LIKE '%'||#{fd}||'%'
 	</select>
 </mapper>

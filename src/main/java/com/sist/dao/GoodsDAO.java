@@ -76,4 +76,21 @@ public class GoodsDAO {
 		
 		return vo;
 	}
+	public static GoodsVO goodsCookieData(Map map)
+	{
+		GoodsVO vo=null;
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();
+			vo=session.selectOne("goodsDetailData",map);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+			session.close();
+		}
+		
+		return vo;
+	}
 }

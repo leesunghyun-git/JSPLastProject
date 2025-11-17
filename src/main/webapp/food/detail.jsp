@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../css/comment.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style type="text/css">
@@ -13,7 +15,118 @@
 	margin: 0px auto;
 	width: 850px;
 }
+.img-link{
+	cursor: pointer;
+}
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+// ?rno=1 &page=5 => ${param.rno}
+let likeCheck =false
+let rno=${param.fno}
+let page=${param.page}
+let id='${sessionScope.id}'
+
+$(function(){
+		if(id.length>0)
+		{
+			$.ajax({
+				type:'post',
+				url:'../like/likeCheck.do',
+				data:{
+					"rno":rno,
+					"type":1
+				},
+				success:function(result){
+					if(result==='OK')
+					{
+						likeCheck=true
+						$('#likeBtn').attr("src","../img/images/likeon.png")
+					}
+					else
+					{
+						likeCheck=false
+						$('#likeBtn').attr("src","../img/images/likeoff.png")
+					}
+				},
+				error:function(err)
+				{
+					console.log(err)
+				}
+			
+			})
+		
+		}
+		$('#likeBtn').click(function(){
+			if(likeCheck===true)
+			{
+				$.ajax({
+					type:'post',
+					url:'../like/likeOff.do',
+					data:{"rno":rno,"type":1},
+					success:function(result){
+						if(result>=0)
+						{
+							likeCheck=false
+							$('#likeBtn img').attr('src','../img/images/likeoff.png')
+						}
+					},
+					error:function(error){
+						console.log(error)
+					}
+				
+				})
+
+			
+			}
+			else
+			{
+				$.ajax({
+					type:'post',
+					url:'../like/likeOn.do',
+					data:{"rno":rno,"type":1},
+					success:function(result){
+						if(result>=0)
+						{
+							likeCheck=true
+							$('#likeBtn img').attr('src','../img/images/likeon.png')
+						}
+					},
+					error:function(error){
+						console.log(error)
+					}
+				
+				})
+			}
+			
+		
+		
+		})
+		let bcheck=false
+		$('.updateBtn').click(function(){
+			let no=$(this).attr("data-no");
+			$('.forms').hide();
+			$('.updateBtn').val("수정")
+			if(bcheck===false)
+			{
+				bcheck=true
+				$('#form'+no).show()
+				$(this).val("취소")
+			}
+			else
+			{
+				bcheck=false
+				$('#form'+no).hide()
+				$(this).val("수정")
+			}
+			
+		})
+
+
+
+})
+
+</script>
 </head>
 <body>
 	<!-- ****** Breadcumb Area Start ****** -->
@@ -113,18 +226,28 @@
 							<td>${vo.content }</td>
 						</tr>
 						<tr>
-							<td class="text-right"><a href="#"
-								class="btn btn-xs btn-danger">좋아요</a> <a href="#"
-								class="btn btn-xs btn-success">찜하기</a> <a href="#"
+							<td class="text-right">
+							<c:if  test="${sessionScope.admin=='n' && sessionScope.id!=null }">
+							<a href="#"
+								class="btn btn-xs" id="likeBtn"><img src="../img/images/likeoff.png"
+								style="width:25px;height:25px"
+								></a> 
+								<c:if test="${jCount==null || jCount==0 }">
+								<a href="../jjim/jjim_insert.do?rno=${vo.fno}&type=1&page=${page}"class="btn btn-xs btn-success">찜하기</a> 
+								</c:if>
+								<c:if test="${jCount!=null && jCount!=0 }">
+								<span class="btn btn-xs btn-outline-success">찜하기</span> 
+								</c:if>		
 								
-								
-								class="btn btn-xs btn-info">예약하기</a> 
+								<a href="#"class="btn btn-xs btn-info">예약하기</a>
+							</c:if>
 								<c:if test="${page==0}">
-								<a href="../main/main.do" class="btn btn-xs btn-warning">목록</a>
+								<a href="javascript:history.back()" class="btn btn-xs btn-warning">목록</a>
 								</c:if>
 								<c:if test="${page!=0}">
 								<a href="../food/list.do?page=${page}" class="btn btn-xs btn-warning">목록</a>
 								</c:if>
+								
 								</td>
 						</tr>
 					</table>
@@ -193,6 +316,50 @@
 				</div>
 			</div>
 		</div>
+		<!-- 댓글 -->
+		<h2>맛집 리뷰</h2>
+		<c:if test="${rCount==0 }">
+				리뷰가 없습니다.
+			</c:if>
+		<c:if test="${rCount>0 }">
+		<ul class="review-list">
+			<c:forEach var="rvo" items="${reList }">
+			<li class="review-card">
+				<div class="review-header">
+					<div class="review-avatar">${fn:substring(rvo.name,0,1) }</div>
+					<div class="review-nick">${rvo.id }</div>
+					<div class="review-date">${rvo.dbday }</div>
+				</div>
+				<div class="review-text">${rvo.msg }</div>
+				<c:if test="${sessionScope.id==rvo.id }">
+				<div class="review-meta">
+					<div><input type="button" class="btn-xs btn-primary updateBtn" value="수정" data-no="${rvo.no }"></div>
+					<div><a href="../review/review_delete.do?no=${rvo.no }&type=1&cno=${rvo.cno}&page=${page}" class="btn-xs btn-danger">삭제</a>
+				</div>
+				</c:if>
+				<div>
+				<form class="review-form forms" id="form${rvo.no}"method="post" action="../review/review_update.do" style="display:none">
+				<input type="hidden" name="cno" value="${vo.fno }">
+				<input type="hidden" name="page" value="${page }">
+				<input type="hidden" name="no" value="${rvo.no }">
+				<input type="hidden" name="type" value="1">
+				<input type="text" name="msg" placeholder="리뷰 입력" required="required">
+				<button type="submit">등록</button>
+				</form>
+				</div>
+			</li>
+			</c:forEach>
+		</ul>
+		</c:if>
+		<c:if test="${sessionScope.id!=null }">
+		<form class="review-form" method="post" action="../review/review_insert.do">
+			<input type="hidden" name="cno" value="${vo.fno }">
+			<input type="hidden" name="page" value="${page }">
+			<input type="hidden" name="type" value="1">
+			<input type="text" name="msg" placeholder="리뷰 입력" required="required">
+			<button type="submit">등록</button>
+		</form>
+		</c:if>
 	</section>
 </body>
 </html>

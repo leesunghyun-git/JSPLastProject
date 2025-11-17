@@ -27,7 +27,7 @@ header #navbar ul.menu-list li {
                     <div class="single_catagory wow fadeInUp" data-wow-delay=".3s">
                         <img src="../img/catagory-img/1.jpg" alt="">
                         <div class="catagory-title">
-                            <a href="#">
+                            <a href="#newsSection">
                                 <h5>오늘의 날씨</h5>
                             </a>
                         </div>
@@ -245,34 +245,14 @@ header #navbar ul.menu-list li {
                         </div>
 
                         <!-- Single Widget Area -->
-                        <div class="single-widget-area add-widget text-center">
-                            <div class="add-widget-area">
-                                <img src="../img/sidebar-img/6.jpg" alt="">
-                                <div class="add-text">
-                                    <div class="yummy-table">
-                                        <div class="yummy-table-cell">
-                                            <h2>Cooking Book</h2>
-                                            <p>Buy Book Online Now!</p>
-                                            <a href="#" class="add-btn">Buy Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="single-widget-area add-widget text-center" id="">
+                            
                         </div>
 
                         <!-- Single Widget Area -->
-                        <div class="single-widget-area newsletter-widget">
-                            <div class="widget-title text-center">
-                                <h6>Newsletter</h6>
-                            </div>
-                            <p>Subscribe our newsletter gor get notification about new updates, information discount, etc.</p>
-                            <div class="newsletter-form">
-                                <form action="#" method="post">
-                                    <input type="email" name="newsletter-email" id="email" placeholder="Your email">
-                                    <button type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-                                </form>
-                            </div>
-                        </div>
+                        <div class="single-widget-area newsletter-widget" id="newsSection">
+                             <jsp:include page="../news/news.jsp"></jsp:include>
+                        </div>	
                     </div>
                 </div>
             </div>

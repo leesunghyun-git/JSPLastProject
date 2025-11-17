@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberVO {
-	private String id,pwd,name,sex,birthday,email,post,addr1,addr2,phone,content,admin,dbday;
+	private String id,pwd,name,sex,birthday,email,post,addr1,addr2,phone,content,admin,dbday,msg;
 	private Date regdate;
 	
 }

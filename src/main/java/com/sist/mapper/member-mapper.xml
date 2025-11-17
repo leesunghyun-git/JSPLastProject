@@ -15,5 +15,33 @@
 			9. 옵션 : 카카오 로그인 : 자바스크립트
 		
 	 -->
-
+	 <select id="memberIdCheck" resultType="int" parameterType="string">
+	 	SELECT count(*)
+	 	FROM mvcMember
+	 	WHERE id=#{id}
+	 
+	 </select>
+	<insert id="memberInsert" parameterType="MemberVO">
+		INSERT INTO mvcMember VALUES(
+			#{id},
+			#{pwd},
+			#{name},
+			#{sex},
+			#{birthday},
+			#{email},
+			#{post},
+			#{addr1},
+			#{addr2},
+			#{phone},
+			#{content},
+			'n',
+			SYSDATE		
+		)
+	
+	</insert>
+	<select id="memberInfoData" resultType="MemberVO" parameterType="string">
+		SELECT id,name,sex,pwd,admin,post,addr1,addr2,phone
+		FROM mvcMember
+		WHERE id=#{id}
+	</select>
 </mapper>

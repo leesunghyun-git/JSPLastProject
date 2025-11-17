@@ -49,7 +49,9 @@
                     <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                         <!-- Post Thumb -->
                         <div class="post-thumb">
+                        	<a href="../recipe/detail.do?no=${vo.no }">
                             <img src="${vo.poster }" alt="">
+                            </a>
                         </div>
                         <!-- Post Content -->
                         <div class="post-content">
@@ -57,11 +59,11 @@
                                 <div class="post-author-date-area d-flex">
                                     <!-- Post Author -->
                                     <div class="post-author">
-                                        <a href="#" style="cursor:default">${vo.chef }</a>
+                                        <a href="../recipe/detail.do?no=${vo.no }" style="cursor:default">${vo.chef }</a>
                                     </div>
                                     <!-- Post Date -->
                                     <div class="post-date">
-                                        <a href="#" style="cursor:default">${vo.hit }</a>
+                                        <a href="../recipe/detail.do?no=${vo.no }" style="cursor:default">${vo.hit }</a>
                                     </div>
                                 </div>
                                 <!-- Post Comment & Share Area -->
@@ -80,7 +82,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <a href="../recipe/detail.do?no=${vo.no }">
                                 <h4 class="post-headline">${vo.title }</h4>
                             </a>
                         </div>

@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="../css/cookie.css">
 </head>
 <body>
 	<!-- ****** Breadcumb Area Start ****** -->
@@ -116,6 +117,29 @@
                         </div>
                     </div>
                 </div>
+                <c:if test="${sessionScope.id!=null }">
+                <div class="row" style="margin-top:20px">
+                	<div class="recent-container">
+                		<h3>최근 방문 맛집</h3>
+                		<div class="recent-list">
+                		<c:set var="i" value="0"/>
+                		<c:if test="${i<9 }">
+                		<c:forEach var="vo" items="${cList }">
+                			<a class="recent-card">
+                				<div class="thumb">
+                					<img src="${vo.poster }">
+                				</div>
+                				<div class="meta">
+                					<div class="title">${vo.name }</div>
+                				</div>
+                			</a>
+                			<c:set var="i" value="${i+1 }"/>
+                		</c:forEach>
+                		</c:if>
+                		</div>
+                	</div>
+                </div>
+                </c:if>
             </div>
         </div>
     </section>

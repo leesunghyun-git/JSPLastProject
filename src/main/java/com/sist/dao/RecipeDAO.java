@@ -110,6 +110,63 @@ public class RecipeDAO {
 	// 쉐프 상세보기
 	
 	// 레시피 상세보기
+	public static RecipeDetailVO recipeDetailData(int no)
+	{
+		SqlSession session=null;
+		RecipeDetailVO vo=null;
+		try {
+			session=ssf.openSession();
+			session.update("recipeHitIncrement",no);
+			session.commit();
+			vo=session.selectOne("recipeDetailData",no);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		
+		return vo;
+	}
 	// 레시피 등록
 	// 레시피 검색
+	public static List<RecipeVO> recipeFindData(Map map)
+	{
+		SqlSession session=null;
+		List<RecipeVO> list=null;
+		try {
+			session=ssf.openSession();
+			list=session.selectList("recipeFindListData",map);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		
+		return list;
+	}
+	
+	public static int recipeFindTotalPage(Map map)
+	{
+		SqlSession session=null;
+		int totalPage=0;
+		try {
+			session=ssf.openSession();
+			totalPage=session.selectOne("recipeFindTotalPage",map);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+		}
+		
+		return totalPage;
+	}
 }

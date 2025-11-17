@@ -77,4 +77,57 @@ public class FoodDAO {
 		
 		return vo;
 	}
+	// mapper.xml => 실행(X) =>sql문장 저장
+	// 분산 =>  Front Back DBA
+	public static FoodVO foodCookieData(int fno)
+	{
+		FoodVO vo=null;
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();
+			vo=session.selectOne("foodDetailData",fno);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+			session.close();
+		}
+		
+		return vo;
+	}
+	public static List<FoodVO> foodFindData(Map map)
+	{
+		List<FoodVO> list=null;
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();
+			list=session.selectList("foodFindData", map);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+			session.close();
+		}
+		
+		return list;
+	}
+	public static int foodFindCount(Map map)
+	{
+		int totalPage =0;
+		SqlSession session=null;
+		try {
+			session=ssf.openSession();
+			totalPage=session.selectOne("foodFindCount",map);
+		}catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}finally {
+			if(session!=null)
+			session.close();
+		}
+		
+		return totalPage;
+	}
 }

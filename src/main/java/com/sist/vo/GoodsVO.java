@@ -23,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GoodsVO {
-	private int no,goods_discount,hit;
+	private int no,goods_discount,hit,price;
 	private String goods_name,goods_price,goods_sub,goods_first_price,goods_delivery,goods_poster;
 	private String lastprice;
 	/*

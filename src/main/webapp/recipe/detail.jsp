@@ -1,0 +1,246 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../css/comment.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style type="text/css">
+.recipe_row {
+	margin: 0px auto;
+	width: 850px;
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+// ?rno=1 &page=5 => ${param.rno}
+let likeCheck =false
+let rno=${param.no}
+let id='${sessionScope.id}'
+
+$(function(){
+		if(id.length>0)
+		{
+			$.ajax({
+				type:'post',
+				url:'../like/likeCheck.do',
+				data:{
+					"rno":rno,
+					"type":2
+				},
+				success:function(result){
+					if(result==='OK')
+					{
+						likeCheck=true
+						$('#likeBtn').attr("src","../img/images/likeon.png")
+					}
+					else
+					{
+						likeCheck=false
+						$('#likeBtn').attr("src","../img/images/likeoff.png")
+					}
+				},
+				error:function(err)
+				{
+					console.log(err)
+				}
+			
+			})
+		
+		}
+		$('#likeBtn').click(function(){
+			if(likeCheck===true)
+			{
+				$.ajax({
+					type:'post',
+					url:'../like/likeOff.do',
+					data:{"rno":rno,"type":2},
+					success:function(result){
+						if(result>=0)
+						{
+							likeCheck=false
+							$('#likeBtn img').attr('src','../img/images/likeoff.png')
+						}
+					},
+					error:function(error){
+						console.log(error)
+					}
+				
+				})
+
+			
+			}
+			else
+			{
+				$.ajax({
+					type:'post',
+					url:'../like/likeOn.do',
+					data:{"rno":rno,"type":2},
+					success:function(result){
+						if(result>=0)
+						{
+							likeCheck=true
+							$('#likeBtn img').attr('src','../img/images/likeon.png')
+						}
+					},
+					error:function(error){
+						console.log(error)
+					}
+				
+				})
+			}
+			
+		
+		
+		})
+
+
+
+})
+
+</script>
+</head>
+<body>
+	<!-- ****** Breadcumb Area Start ****** -->
+	<div class="breadcumb-area"
+		style="background-image: url(../img/bg-img/breadcumb.jpg);">
+		<div class="container h-100">
+			<div class="row h-100 align-items-center">
+				<div class="col-12">
+					<div class="bradcumb-title text-center">
+						<h2>레시피 상세보기</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="breadcumb-nav">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<%-- 검색기 --%>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ****** Breadcumb Area End ****** -->
+
+	<!-- ****** Archive Area Start ****** -->
+	<section class="archive-area section_padding_80">
+		<div class="container">
+			<div class="row">
+				<table class="table">
+					<tr>
+						<td class="text-center" colspan=3>
+							<img src="${vo.poster }" style="width:700px;height:450px;">
+						</td>
+					</tr>
+					<tr>
+						<td class="text-center" colspan=3>
+							<h3>${vo.title }</h3>
+						</td>
+					</tr>
+					<tr>
+						<td style="color:gray" colspan=3>${vo.content }</td>
+					</tr>
+					<tr>
+						<td class="text-center"><img src="../recipe/icon/a1.png"></td>
+						<td class="text-center"><img src="../recipe/icon/a2.png"></td>
+						<td class="text-center"><img src="../recipe/icon/a3.png"></td>
+					</tr>
+					<tr>
+						<td class="text-center">${vo.info1 }</td>
+						<td class="text-center">${vo.info2 }</td>
+						<td class="text-center">${vo.info3 }</td>
+					</tr>
+					<tr>
+							<td class="text-right" colspan=3>
+							<c:if  test="${sessionScope.admin=='n' && sessionScope.id!=null }">
+							<a href="#" class="btn btn-xs" id="likeBtn">
+							<img src="../img/images/likeoff.png" style="width:25px;height:25px"></a>
+							<a href="#" class="btn btn-xs btn-success">찜하기</a>
+							</c:if>
+								<a href="../recipe/list.do" class="btn btn-xs btn-warning">목록</a>
+								
+								</td>
+						</tr>
+				</table>
+				<table class="table">
+					<tr>
+						<td colspan="2"><h3>[조리순서]</h3></td>
+					</tr>
+					<tr>
+						<td>
+							<c:forEach var="msg" items="${mList }" varStatus="s"> 
+								<table class="table">
+									<tr>
+										<td class="text-left" width=80%>${msg }</td>
+										<td class="text-right" width=20%>
+											<img src="${iList[s.index] }" style="width:150px;height:100px">
+										</td>
+									</tr>
+								</table>
+							</c:forEach>
+						</td>
+				</table>
+				<table class="table">
+					<tr>
+						<td colspan="2"><h3>쉐프 정보</h3></td>
+					</tr>
+					<tr>
+						<td width="30%" rowspan="2" class="text-center">
+							<img src="${vo.chef_poster }" style="width:100px;height100px" class="img-circle">
+						</td>
+						<td width="70%">${vo.chef }</td>
+					</tr>
+					<tr>
+						<td width="70%">${vo.chef_profile }</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<h2>맛집 리뷰</h2>
+		<c:if test="${rCount==0 }">
+				리뷰가 없습니다.
+			</c:if>
+		<c:if test="${rCount>0 }">
+		<ul class="review-list">
+			<c:forEach var="rvo" items="${reList }">
+			<li class="review-card">
+				<div class="review-header">
+					<div class="review-avatar">${fn:substring(rvo.name,0,1) }</div>
+					<div class="review-nick">${rvo.id }</div>
+					<div class="review-date">${rvo.dbday }</div>
+				</div>
+				<div class="review-text">${rvo.msg }</div>
+				<c:if test="${sessionScope.id==rvo.id }">
+				<div class="review-meta">
+					<div><input type="button" class="btn-xs btn-primary" value="수정"></div>
+					<div><a href="../review/review_delete.do?no=${rvo.no }&type=2&cno=${rvo.cno}&page=${page}" class="btn-xs btn-danger">삭제</a>
+				</div>
+				</c:if>
+			</li>
+			</c:forEach>
+		</ul>
+		</c:if>
+		<c:if test="${sessionScope.id!=null }">
+		<form class="review-form" method="post" action="../review/review_insert.do">
+			<input type="hidden" name="cno" value="${vo.no }">
+			<input type="hidden" name="page" value="${page }">
+			<input type="hidden" name="type" value="2">
+			<input type="text" name="msg" placeholder="리뷰 입력" required="required">
+			<button type="submit">등록</button>
+		</form>
+		</c:if>
+	</section>
+</body>
+</html>

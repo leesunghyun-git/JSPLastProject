@@ -14,6 +14,14 @@
   	<typeAlias type="com.sist.vo.ChefVO" alias="ChefVO"/>
   	<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO"/>
   	<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO"/>
+  	<typeAlias type="com.sist.vo.BoardReplyVO" alias="BoardReplyVO"/>
+  	<typeAlias type="com.sist.vo.RecipeDetailVO" alias="RecipeDetailVO"/>
+  	<typeAlias type="com.sist.vo.LikeVO" alias="LikeVO"/>
+  	<typeAlias type="com.sist.vo.JjimVO" alias="JjimVO"/>
+  	<typeAlias type="com.sist.vo.ReplyVO" alias="ReplyVO"/>
+  	<typeAlias type="com.sist.vo.ReserveVO" alias="ReserveVO"/>
+  	<typeAlias type="com.sist.vo.ReviewVO" alias="ReviewVO"/>
+  	<typeAlias type="com.sist.vo.CartVO" alias="CartVO"/>
   </typeAliases>
   <environments default="develpoment">
     <environment id="develpoment">
@@ -33,5 +41,13 @@
    <mapper resource="com/sist/mapper/recipe-mapper.xml"></mapper>
    <mapper resource="com/sist/mapper/board-mapper.xml"></mapper>
    <mapper resource="com/sist/mapper/member-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/reply-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/like-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/jjim-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/reserve-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/mypage-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/admin-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/review-mapper.xml"></mapper>
+   <mapper resource="com/sist/mapper/cart-mapper.xml"></mapper>
   </mappers>
 </configuration>
